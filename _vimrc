@@ -16,6 +16,7 @@ set autochdir                  " automatically change window's cwd to file's dir
 set number                     " show line numbers
 set showcmd                    " show command in bottom bar
 set cursorline                 " highlight current line
+set cursorcolumn               " highlight current column
 set wildmenu                   " visual autocomplete for command menu
 set wildignore=*.o,*~,*.pyc    " ignore compiled files
 set lazyredraw                 " redraw only when we need to.
@@ -94,8 +95,40 @@ call pathogen#helptags()
 "    Auto cmd
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" cursorline & column settings
+autocmd InsertEnter * highlight CursorLine guibg=#000050 guifg=fg
+autocmd InsertLeave * highlight CursorLine guibg=#004000 guifg=fg
+autocmd InsertEnter * highlight CursorColumn ctermfg=White ctermbg=Yellow cterm=bold guifg=white guibg=yellow gui=bold
+autocmd InsertLeave * highlight CursorColumn ctermfg=Black ctermbg=Yellow cterm=bold guifg=Black guibg=yellow gui=NONE
+
 " remove any extra whitespace from the ends of lines when saving python files
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
 " PEP8 style guide checking for python files
 autocmd BufWritePost *.py call Flake8()
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"    Python mode config
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:pymode_rope=1
+" Documentation
+let g:pymode_doc=1
+let g:pymode_doc_key='K'
+"Linting
+let g:pymode_lint=1
+let g:pymode_lint_checker="pyflakes,pep8"
+" Auto check on save
+let g:pymode_lint_write=1
+" Support virtualenv
+let g:pymode_virtualenv=1
+" Enable breakpoints plugin
+let g:pymode_breakpoint=1
+let g:pymode_breakpoint_bind='<leader>b'
+" syntax highlighting
+let g:pymode_syntax=1
+let g:pymode_syntax_all=1
+let g:pymode_syntax_indent_errors=g:pymode_syntax_all
+let g:pymode_syntax_space_errors=g:pymode_syntax_all
+" Don't autofold code
+let g:pymode_folding=0
 
