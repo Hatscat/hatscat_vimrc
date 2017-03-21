@@ -4,7 +4,7 @@
 
 set nocompatible               " compatibility with vi off
 set title                      " show file name
-set textwidth=79               " lines longer than this columns number will be broken
+set textwidth=120               " lines longer than this columns number will be broken
 set shiftwidth=4               " operation >> indents 4 of columns; << unindents 4 columns
 set tabstop=4                  " number of visual spaces per TAB
 set expandtab                  " insert spaces when hitting TABs
@@ -88,47 +88,52 @@ map <C-l> <C-W>l
 "    Launch Config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-call pathogen#infect()                      " use pathogen
-call pathogen#helptags()
+"call pathogen#infect()                      " use pathogen
+"call pathogen#helptags()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "    Auto cmd
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " cursorline & column settings
-hi CursorLine ctermbg=DarkBlue guifg=bg guibg=fg
-hi CursorColumn ctermbg=DarkBlue guifg=bg guibg=fg
+hi CursorLine ctermbg=LightBlue guifg=bg guibg=fg
+hi CursorColumn ctermbg=LightBlue guifg=bg guibg=fg
 "hi CursorLine ctermfg=bg ctermbg=fg
 "hi CursorColumn ctermfg=bg ctermbg=fg
 
-" remove any extra whitespace from the ends of lines when saving python files
-autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
+au InsertEnter * hi CursorLine ctermbg=LightGreen guifg=bg guibg=fg
+au InsertEnter * hi CursorColumn ctermbg=LightGreen guifg=bg guibg=fg
+au InsertLeave * hi CursorLine ctermbg=LightBlue guifg=bg guibg=fg
+au InsertLeave * hi CursorColumn ctermbg=LightBlue guifg=bg guibg=fg
+
+" remove any extra whitespace from the ends of lines when saving files
+au BufWritePre * %s/\s\+$//e
 " PEP8 style guide checking for python files
-autocmd BufWritePost *.py call Flake8()
+"autocmd BufWritePost *.py call Flake8()   *
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "    Python mode config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:pymode_rope=1
+"let g:pymode_rope=1
 " Documentation
-let g:pymode_doc=1
-let g:pymode_doc_key='K'
+"let g:pymode_doc=1
+"let g:pymode_doc_key='K'
 "Linting
-let g:pymode_lint=1
-let g:pymode_lint_checker="pyflakes,pep8"
+"let g:pymode_lint=1
+"let g:pymode_lint_checker="pyflakes,pep8"
 " Auto check on save
-let g:pymode_lint_write=1
+"let g:pymode_lint_write=1
 " Support virtualenv
-let g:pymode_virtualenv=1
+"let g:pymode_virtualenv=1
 " Enable breakpoints plugin
-let g:pymode_breakpoint=1
-let g:pymode_breakpoint_bind='<leader>b'
+"let g:pymode_breakpoint=1
+"let g:pymode_breakpoint_bind='<leader>b'
 " syntax highlighting
-let g:pymode_syntax=1
-let g:pymode_syntax_all=1
-let g:pymode_syntax_indent_errors=g:pymode_syntax_all
-let g:pymode_syntax_space_errors=g:pymode_syntax_all
+"let g:pymode_syntax=1
+"let g:pymode_syntax_all=1
+"let g:pymode_syntax_indent_errors=g:pymode_syntax_all
+"let g:pymode_syntax_space_errors=g:pymode_syntax_all
 " Don't autofold code
-let g:pymode_folding=0
-
+"let g:pymode_folding=0
